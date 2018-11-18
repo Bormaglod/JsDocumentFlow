@@ -1,0 +1,19 @@
+/*
+* Third Party
+*/
+@import "../../libs/normalize.css/normalize.css";
+@import "../../libs/bootstrap/dist/css/bootstrap.css";
+@import "../../libs/simplePagination.js/simplePagination.css";
+@import "../../libs/jquery-editable-select/dist/jquery-editable-select.css";
+@import "../../libs/jqwidgets/jqwidgets/styles/jqx.base.css";
+@import "../../libs/jqwidgets/jqwidgets/styles/jqx.web.css";
+@import "../../libs/jqwidgets/jqwidgets/styles/jqx.metro.css";
+@import "../../libs/jqwidgets/jqwidgets/styles/jqx.bootstrap.css";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+
+/*
+* Custom
+*/
+@import "partials/app";
+@import "partials/nav.css";

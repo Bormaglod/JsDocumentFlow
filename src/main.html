@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<title>Document flow</title>
+		
+		<link type="text/css" href="css/main.css" media="screen" rel="stylesheet"/>
+		<script type="text/javascript" src="js/main.js"></script>
+	</head> 
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col bd-sidebar">
+					<div class="nav-side-menu">
+						<div class="brand">Document flow</div>
+						<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+						<div class="menu-list">
+							<ul id="menu-content" class="menu-content collapse out">
+								<li id="dashboard-item">
+									<a href="#">
+										<i class="fas fa-tachometer-alt fa-lg fa-fw"></i> Dashboard
+									</a>
+								</li>
+								<li>
+									<a href="logout.php">
+										<i class="fas fa-sign-out-alt fa-lg fa-fw"></i> Выход
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col bd-main">
+					<div class="row">
+						<div class="col bd-master-table">
+							<div id="bd-master-navigator">
+							</div>
+							<div id="bd-master-grid">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col bd-child-table">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+    <div id='columnsWindow'>
+		<div id='windowHeader'></div>
+        <div id='windowContent'></div>
+    </div>
+</html>
