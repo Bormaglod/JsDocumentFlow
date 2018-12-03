@@ -21,8 +21,11 @@
 //= ../../libs/jqwidgets/jqwidgets/jqxdropdownlist.js
 //= ../../libs/jqwidgets/jqwidgets/jqxwindow.js
 //= ../../libs/jqwidgets/jqwidgets/jqxinput.js
+//= ../../libs/jqwidgets/jqwidgets/jqxform.js
+//= ../../libs/jqwidgets/jqwidgets/jqxvalidator.js
 
 /*
  * Custom
  */
 //= partials/app.js
+//= partials/breadcrumbs.js

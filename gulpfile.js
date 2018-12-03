@@ -59,7 +59,7 @@ gulp.task('js:build', function (done) {
     gulp.src(path.src.js) //Найдем наш main файл
         .pipe(rigger()) //Прогоним через rigger
         //.pipe(sourcemaps.init()) //Инициализируем sourcemap
-        .pipe(uglify()) //Сожмем наш js
+        //.pipe(uglify()) //Сожмем наш js
         .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
         //.pipe(sourcemaps.write()) //Пропишем карты
         .pipe(gulp.dest(path.build.js)); //Выплюнем готовый файл в build

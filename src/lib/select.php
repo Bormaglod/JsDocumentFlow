@@ -3,41 +3,20 @@
 	
     require('connection.php');
     
-    $stmt = $dbh->prepare('select * from get_command(:command)');
-	$stmt->bindParam(':command', $_GET['id']);
-    $stmt->execute();
-    
-    $cmd = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $dbh->prepare($_POST['select_sql']);
 
-    $rows = array();
-    $total_rows = 0;
-    if ($cmd['command_type'] == 'view_table')
+    preg_match_all('/(?<!:):([a-zA-Z]{1}[a-zA-Z_0-9]*)/', $_POST['select_sql'], $params, PREG_SET_ORDER);
+    foreach ($params as $value) 
     {
-        $schema_data = json_decode($cmd['schema_data']);
-
-	    foreach($schema_data->viewer->datasets as $db) 
-	    {
-		    if ($schema_data->viewer->master == $db->name) 
-		    {
-			    $select = $db->select;
-			    break;
-		    }
-	    }
-
-        if (isset($select))
-        {
-            /*$pagenum = $_GET['pagenum'];
-            $pagesize = $_GET['pagesize'];
-            $start = $pagenum * $pagesize;*/
-
-            $stmt = $dbh->prepare($select);
-            $stmt->execute();
-            $total_rows = $stmt->rowCount();
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } 
+        $param_type = array_key_exists($value[1], $_POST) ? PDO::PARAM_STR : PDO::PARAM_NULL;
+        $stmt->bindParam($value[0], $_POST[$value[1]], $param_type);
     }
 
-    $data = [ 'total_rows' => $total_rows, 'rows' => $rows, 'schema_data' => $schema_data ];
+    $stmt->execute();
+    $total_rows = $stmt->rowCount();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $data = [ 'total_rows' => $total_rows, 'rows' => $rows ];
 
 	header('Content-Type: application/json');
 	echo json_encode($data);
