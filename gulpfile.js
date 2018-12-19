@@ -15,13 +15,13 @@ var gulp = require('gulp'),
 
 var path = {
     build: { //Тут мы укажем куда складывать готовые после сборки файлы
-        html: 'build/',
-        js: 'build/js/',
-        css: 'build/css/',
-        img: 'build/img/',
-        fonts: 'build/webfonts/',
-        phplib: 'build/lib/',
-	cssimg: 'build/css/images'
+        html: '../../wwwroot/docflow.home/',
+        js: '../../wwwroot/docflow.home/js/',
+        css: '../../wwwroot/docflow.home/css/',
+        img: '../../wwwroot/docflow.home/img/',
+        fonts: '../../wwwroot/docflow.home/webfonts/',
+        phplib: '../../wwwroot/docflow.home/lib/',
+	cssimg: '../../wwwroot/docflow.home/css/images'
     },
     src: { //Пути откуда брать исходники
         html: ['src/*.html', 'src/*.php'], //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html

@@ -2,7 +2,7 @@
 {
 	let pictures;
 
-	const saveGridState = (selector, name, dataset) => {
+	let saveGridState = (selector, name, dataset) => {
 		let states = [];
 		for (let value of dataset.columns) {
 			let column = $(selector).jqxGrid('getcolumn', value.datafield);
@@ -18,12 +18,12 @@
 		localStorage[name] = JSON.stringify(states);
 	}
 
-	const loadGridState = (name, dataset) => {
+	let loadGridState = (name, dataset) => {
 		let state = localStorage[name];
 		if (state)
 		{
 			let jsonState = JSON.parse(state);
-			for (const [index, value] of dataset.columns.entries()) {
+			for (let [index, value] of dataset.columns.entries()) {
 				let column = jsonState.find(data => data.datafield == value.datafield);
 				if (typeof column === 'undefined') continue;
 				
@@ -33,27 +33,9 @@
 		}
 	}
 
-	const createErrorWindow = () => {
-		$('#error-window').jqxWindow({
-			isModal: true,
-			autoOpen: false, 
-			resizable: false,
-			position: 'center',
-			showCollapseButton: false,
-			height: 135,
-			width: 300,
-			theme: localStorage.global_theme,
-			okButton: $('#button-error-ok'),
-			initContent: function () {
-				$('#button-error-ok').jqxButton({ width: '80px', theme: localStorage.global_theme });
-			}
-		});
-	}
-
-	const showErrorWindow = data => {
+	let showErrorWindow = data => {
 		let msg = data.message;
 		if (data.code == 23505) {
-
 			let constraint = msg.match('"(.+?)"');
 			if (constraint != null) {
 				if (constraint[1].includes('code')) {
@@ -64,11 +46,10 @@
 			}
 		}
 
-		$('#error-message').html(msg);
-		$('#error-window').jqxWindow('open');
+		dialogs.error(msg);
 	}
 
-	const createGroupWindow = () => {
+	let createGroupWindow = () => {
 		$('#group-window').jqxWindow({
 			isModal: true,
 			autoOpen: false, 
@@ -99,7 +80,7 @@
 		});
 	}
 
-	const createColumnsWindow = () => {
+	let createColumnsWindow = () => {
 		$('#columns-window').jqxWindow({ 
 			resizable: true, 
 			autoOpen: false, 
@@ -110,7 +91,7 @@
 		});
 	}
 
-	const createGridAdapter = (dataset, params) => {
+	let createGridAdapter = (dataset, params) => {
 		source = {
 			datatype: 'json',
 			url: 'lib/select.php',
@@ -120,6 +101,9 @@
 				commit(true);
 			},
 			updaterow: function (rowid, rowdata, commit) {
+        commit(true);
+			},
+			deleterow: function (rowid, commit) {
         commit(true);
     	}
 		}
@@ -131,7 +115,7 @@
 		return new $.jqx.dataAdapter(source);
 	}
 
-	const readPictures = () => {
+	let readPictures = () => {
 		params = { 
 			select_sql: "select * from picture_select() where parent_id = get_constant('picture.status')::uuid" 
 		}
@@ -140,7 +124,7 @@
 			.done(data => pictures = data);
 	}
 
-	const createGridView = (selector, cmd_id) => {
+	let createGridView = (selector, cmd_id) => {
 		$(selector).off();
 		$('#group-window').off();
 
@@ -148,7 +132,7 @@
 		let detail_dataset;
 		let grid_name;
 
-		const settingVariables = data => {
+		let settingVariables = data => {
 			master_dataset = $.grep(data.schema_data.viewer.datasets, e => e.name == data.schema_data.viewer.master)[0];
 			if ('detail' in data.schema_data.viewer) {
 				detail_dataset = $.grep(data.schema_data.viewer.datasets, e => e.name == data.schema_data.viewer.detail)[0];
@@ -157,7 +141,7 @@
 			grid_name = selector.substring(4) + '-' + master_dataset.name;
 		}
 
-		const renderRecord = (datafield, value) => {
+		let renderRecord = (datafield, value) => {
 			if (datafield == 'status_picture_id') {
 				let picture = pictures.rows.find(function (elem) {
 					return elem.id == value;
@@ -173,13 +157,13 @@
 			}
 		}
 
-		const renderToolbar = statusbar => {
+		let renderToolbar = statusbar => {
 			statusbar.html('');
 	
 			let container = $('<div/>').attr('id', 'grid-toolbar').css({'overflow': 'hidden', 'position': 'relative', 'margin': '3px'});
 			let buttons = $('<div/>').addClass('toolbar');
 	
-			const addButton = (name, title) => {
+			let addButton = (name, title) => {
 				return $(`<div class="btn-text btn-left"><i class="fas fa-${name}"></i>${title}</div>`)
 					.appendTo(buttons)
 					.jqxButton({ 
@@ -188,14 +172,14 @@
 					});
 			}
 
-			const createGroupControls = () => {
+			let createGroupControls = () => {
 				$('#text-group-id').val('');
 				$('#text-group-code').val('');
 				$('#text-group-name').val('');
 				$("#group-window").jqxWindow('open');
 			}
 
-			const editGroupControls = () => {
+			let editRow = () => {
 				let selected = $(selector).jqxGrid('selectedrowindex');
 				if (selected != -1) {
 					let data = $(selector).jqxGrid('getrowdata', selected);
@@ -207,10 +191,36 @@
 					}
 				}
 			}
+
+			let deleteRowData = (selected, data_id) => {
+				$.post('lib/delete_group.php', { id: data_id })
+					.done(data => {
+					if (data.code == 0) {
+						let row_id = $(selector).jqxGrid('getrowid', selected);
+						$(selector).jqxGrid('deleterow', row_id);
+					} else {
+						showErrorWindow(data);
+					}
+				});
+			}
+
+			let deleteRow = () => {
+				let selected = $(selector).jqxGrid('selectedrowindex');
+				if (selected != -1) {
+					let data = $(selector).jqxGrid('getrowdata', selected);
+					if (data.status_id == 500) {
+						dialogs.confirm('Удаление группы повлечет удаление всех вложенных групп. Продолжить?', result => {
+							if (result) {
+								deleteRowData(selected, data.id);
+							}
+						});
+					}
+				}
+			}
 	
 			addButton('plus-square', 'Создать');
-			addButton('pen-square', 'Изменить').click(editGroupControls);
-			addButton('minus-square', 'Удалить');
+			addButton('pen-square', 'Изменить').click(editRow);
+			addButton('minus-square', 'Удалить').click(deleteRow);
 	
 			if (master_dataset.info.has_group) {
 				$('<div/>').addClass('section-separator').appendTo(buttons);
@@ -279,7 +289,7 @@
 			$('#columns-window').jqxWindow({ content: table });
 		}
 
-		const updateColumns = () => {
+		let updateColumns = () => {
 			for (let col of master_dataset.columns) {
 				if (col.type == 'image') {
 					col.cellsrenderer = (row, datafield, value) => { return renderRecord(datafield, value); }
@@ -287,7 +297,7 @@
 			}
 		}
 
-		const createGroup = params => {
+		let createGroup = params => {
 			$.extend(params, {
 				kind: master_dataset.info.id,
 				parent: $('#breadcrumbs').breadcrumbs('current')
@@ -304,7 +314,7 @@
 					});
 		}
 
-		const updateGroup = params => {
+		let updateGroup = params => {
 			$.extend(params, {
 				id: $('#text-group-id').val()
 			});
@@ -327,7 +337,7 @@
 					});
 		}
 
-		const executeActionGroup = () => {
+		let executeActionGroup = () => {
 			let params = {
 				code : $('#text-group-code').val(), 
 				name: $('#text-group-name').val()
@@ -340,7 +350,7 @@
 			}
 		}
 
-		const createGrid = () => {
+		let createGrid = () => {
 			let toolbar_height = master_dataset.info.has_group ? 66 : 35;
 
 			loadGridState(grid_name, master_dataset);
@@ -369,7 +379,7 @@
 			.then(createGrid);
 
 		$('#group-form').jqxValidator({ onSuccess: executeActionGroup });
-		
+
 		$(selector).on('rowdoubleclick', function (event) {
 			let data = event.args.row.bounddata;
 			if (data.status_id == 500) {
@@ -390,7 +400,7 @@
 		});
 	}
 
-	const createMenu = data => {
+	let createMenu = data => {
 		for (item of data) {
 			let menu_item = $('<li/>');
 			if (item.command_id != null) {
@@ -449,6 +459,5 @@
 		.done(data => createMenu(data))
 		.then(createColumnsWindow)
 		.then(createGroupWindow)
-		.then(createErrorWindow)
 		.then(readPictures);
 })(jQuery);

@@ -27,5 +27,6 @@
 /*
  * Custom
  */
+//= partials/dialogs.js
 //= partials/app.js
 //= partials/breadcrumbs.js
