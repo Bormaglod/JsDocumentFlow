@@ -17,10 +17,9 @@
   ],
   "dependencies": {
     "normalize.css": "*",
-    "jquery": "#3.2.1",
+    "jquery": "^3.2.1",
     "bootstrap": "^4.1.3",
     "popper.js": "^1.14.4",
-    "simplePagination.js": "jquery.simplePagination#*",
     "jqwidgets": "^6.1.0",
     "jquery-editable-select": "^2.2.5"
   }

@@ -15,13 +15,13 @@ var gulp = require('gulp'),
 
 var path = {
     build: { //Тут мы укажем куда складывать готовые после сборки файлы
-        html: '../../wwwroot/docflow.home/',
-        js: '../../wwwroot/docflow.home/js/',
-        css: '../../wwwroot/docflow.home/css/',
-        img: '../../wwwroot/docflow.home/img/',
-        fonts: '../../wwwroot/docflow.home/webfonts/',
-        phplib: '../../wwwroot/docflow.home/lib/',
-	cssimg: '../../wwwroot/docflow.home/css/images'
+        html: '../../server/wwwroot/docflow.home/',
+        js: '../../server/wwwroot/docflow.home/js/',
+        css: '../../server/wwwroot/docflow.home/css/',
+        img: '../../server/wwwroot/docflow.home/img/',
+        fonts: '../../server/wwwroot/docflow.home/webfonts/',
+        phplib: '../../server/wwwroot/docflow.home/lib/',
+	cssimg: '../../server/wwwroot/docflow.home/css/images'
     },
     src: { //Пути откуда брать исходники
         html: ['src/*.html', 'src/*.php'], //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
@@ -61,7 +61,7 @@ gulp.task('js:build', function (done) {
         //.pipe(sourcemaps.init()) //Инициализируем sourcemap
         //.pipe(uglify()) //Сожмем наш js
         .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
-        //.pipe(sourcemaps.write()) //Пропишем карты
+        .pipe(sourcemaps.write()) //Пропишем карты
         .pipe(gulp.dest(path.build.js)); //Выплюнем готовый файл в build
     
     done();
@@ -111,21 +111,11 @@ gulp.task('build', gulp.series([
 ]));
 
 gulp.task('watch', function(){
-    watch([path.watch.html, path.watch.php], function(event, cb) {
-        gulp.series('html:build');
-    });
-    watch([path.watch.style], function(event, cb) {
-        gulp.series('style:build');
-    });
-    watch([path.watch.js], function(event, cb) {
-        gulp.series('js:build');
-    });
-    watch([path.watch.img], function(event, cb) {
-        gulp.series('image:build');
-    });
-    watch([path.watch.fonts], function(event, cb) {
-        gulp.series('fonts:build');
-    });
+    watch([path.watch.html, path.watch.php], gulp.parallel('html:build'));
+    watch([path.watch.style], gulp.parallel('style:build'));
+    watch([path.watch.js], gulp.parallel('js:build'));
+    watch([path.watch.img], gulp.parallel('image:build'));
+    watch([path.watch.fonts], gulp.parallel('fonts:build'));
 });
 
 gulp.task('clean', function (cb) {

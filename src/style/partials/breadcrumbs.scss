@@ -16,16 +16,15 @@
     padding-left:.75em;
     }        
 .crumbs li a {
-    background:url(../img/crumbs.png) no-repeat right center;
+    background:url(../img/icons8-right2-24.png) no-repeat right center;
     display:block;
-    padding:0 15px 0 0;
+    padding:0 20px 0 0;
     }                            
 .crumbs li a:link,
 .crumbs li a:visited {
     color:#777;
     text-decoration:none;
     }
-/*a:link, a:visited,*/
 .crumbs li a:hover,
 .crumbs li a:focus {
     color:#dd2c0d;
@@ -37,12 +36,4 @@
 
 .crumbs li:not(:last-child) a {
     margin-top: 4px;
-}
-
-.crumbs li a span {
-    background-color: #f4f4f4
-}
-
-.crumbs li a i {
-    background-color: #f4f4f4
 }

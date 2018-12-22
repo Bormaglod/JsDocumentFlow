@@ -8,67 +8,33 @@
 		<script type="text/javascript" src="js/main.js"></script>
 	</head> 
 	<body>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col bd-sidebar">
-					<div class="nav-side-menu">
-						<div class="brand">Document flow</div>
-						<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-						<div class="menu-list">
-							<ul id="menu-content" class="menu-content collapse out">
-								<li id="dashboard-item">
-									<a href="#">
-										<i class="fas fa-tachometer-alt fa-lg fa-fw"></i> Dashboard
-									</a>
-								</li>
-								<li id="exit-item">
-									<a href="logout.php">
-										<i class="fas fa-sign-out-alt fa-lg fa-fw"></i> Выход
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col bd-main">
-					<div class="row">
-						<div id="bd-master-table" class="col bd-master-table">
-							<div id="bd-master-grid"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col bd-detail-table"></div>
-					</div>
-				</div>
+		<div class="nav-side-menu">
+			<div class="brand">Document flow</div>
+			<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+			<div class="menu-list">
+				<ul id="menu-content" class="menu-content collapse out">
+					<li id="dashboard-item">
+						<a href="#">
+							<i class="fas fa-tachometer-alt fa-lg fa-fw"></i> Dashboard
+						</a>
+					</li>
+					<li id="exit-item">
+						<a href="logout.php">
+							<i class="fas fa-sign-out-alt fa-lg fa-fw"></i> Выход
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div>
+			<div id='bd-master-table' style='margin-left:310px; margin-right: 10px'>
 			</div>
 		</div>
 	
-		<div id='columns-window' style='display:none;'>
+		<div id='columns-window' style='display:none'>
 			<div id='columns-window-header'></div>
     	<div id='columns-window-content'></div>
-		</div>
-	
-		<div id='group-window' style='display:none;'>
-			<div id='group-window-header'>
-				<span style='float: left'>Группа</span>
-			</div>
-			<div id='group-window-content'>
-				<form id='group-form'>
-					<div style='display: none'><input type='text' id='text-group-id'/></div>
-					<div style='display: flex; padding: 5px'>
-						<div style='width: 300px'><span>Код группы</span></div>
-						<div style='width: 100%'><input type='text' id='text-group-code'/></div>
-					</div>
-					<div style='display: flex; padding: 5px'>
-						<div style='width: 300px'><span>Наименование группы</span></div>
-						<div style='width: 100%''><input type='text' id='text-group-name'/></div>
-					</div>
-					<div style='float: right; padding: 5px;'>
-						<input id='button-ok' type='button' value='Ok' />
-						<input id='button-cancel' type='button' value='Отмена' />
-					</div>
-				</form>
-			</div>
 		</div>
 	</body>
 </html>
