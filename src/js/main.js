@@ -23,6 +23,7 @@
 //= ../../libs/jqwidgets/jqwidgets/jqxwindow.js
 //= ../../libs/jqwidgets/jqwidgets/jqxinput.js
 //= ../../libs/jqwidgets/jqwidgets/jqxvalidator.js
+//= ../../libs/jqwidgets/jqwidgets/jqxpopover.js
 
 // = ../../libs/jqwidgets/jqwidgets/jqxgrid.storage.js
 // = ../../libs/jqwidgets/jqwidgets/jqxform.js
