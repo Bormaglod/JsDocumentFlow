@@ -100,7 +100,8 @@
 				let column = master_dataset.columns.find(data => data.datafield == datafield);
 				let left = (column.width - 16) / 2;
 				let top = (rowsheight - 16) / 2;
-				return `<img style="margin-left: ${left}px; margin-top: ${top}px" height="16" width="16" src="img/${picture.img_name}"/>`;
+				let image = picture.img_name == null ? 'icons8-question-16.png' : picture.img_name;
+				return `<img style="margin-left: ${left}px; margin-top: ${top}px" height="16" width="16" src="img/${image}"/>`;
 			} else {
 				return '';
 			}

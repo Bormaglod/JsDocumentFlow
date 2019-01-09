@@ -5,6 +5,7 @@
     
     $stmt = $dbh->prepare($_POST['select_sql']);
 
+    // получение всех параметров запоса вида ':параметр'
     preg_match_all('/(?<!:):([a-zA-Z]{1}[a-zA-Z_0-9]*)/', $_POST['select_sql'], $params, PREG_SET_ORDER);
     foreach ($params as $value) 
     {

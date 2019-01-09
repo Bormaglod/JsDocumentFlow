@@ -24,11 +24,10 @@
 //= ../../libs/jqwidgets/jqwidgets/jqxinput.js
 //= ../../libs/jqwidgets/jqwidgets/jqxvalidator.js
 //= ../../libs/jqwidgets/jqwidgets/jqxpopover.js
+//= ../../libs/jquery-editable-select/dist/jquery-editable-select.js
 
 // = ../../libs/jqwidgets/jqwidgets/jqxgrid.storage.js
 // = ../../libs/jqwidgets/jqwidgets/jqxform.js
-
-// = ../../libs/jquery-editable-select/dist/jquery-editable-select.js
 
 /*
  * Custom

@@ -11,10 +11,20 @@
 		<script>
 			$(function()
 			{
-				$.getJSON('lib/get_clients.php', function(data)
+				/*$.getJSON('lib/get_clients.php', function(data)
 				{
 					var items = [];
 					$.each(data, function(i, item)
+					{
+						items.push('<option>' + item.name + '</option>');
+					});
+		
+					$('#client-list').append(items.join(""));
+					$('.combobox').editableSelect({ filter: false });
+				});*/
+				$.getJSON('http://document-flow.home:4201/api/v1/users', function (data) {
+					var items = [];
+					$.each(data.rows, function(i, item)
 					{
 						items.push('<option>' + item.name + '</option>');
 					});
