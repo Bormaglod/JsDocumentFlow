@@ -22,16 +22,24 @@
 					$('#client-list').append(items.join(""));
 					$('.combobox').editableSelect({ filter: false });
 				});*/
-				$.getJSON('http://document-flow.home:4201/api/v1/users', function (data) {
-					var items = [];
-					$.each(data.rows, function(i, item)
-					{
-						items.push('<option>' + item.name + '</option>');
-					});
+				//$.getJSON('http://document-flow.home:4201/api/users', function (data) {
+				$.ajax({
+						url: 'http://document-flow.home:4201/api/users',
+						dataType: 'json',
+						type: 'GET'/*,
+						xhrFields: {
+							withCredentials: true
+						}*/
+					}).done(function(data) {
+						var items = [];
+						$.each(data.rows, function(i, item)
+						{
+							items.push('<option>' + item.name + '</option>');
+						});
 		
-					$('#client-list').append(items.join(""));
-					$('.combobox').editableSelect({ filter: false });
-				});
+						$('#client-list').append(items.join(""));
+						$('.combobox').editableSelect({ filter: false });
+					});
 			});
 		</script>
 	</head> 
